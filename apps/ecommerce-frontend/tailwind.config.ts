@@ -1,11 +1,16 @@
-const { createGlobPatternsForDependencies } = require('@nx/angular/tailwind');
-const { join } = require('path');
+import { join } from 'path';
+import { createGlobPatternsForDependencies } from '@nx/angular/tailwind';
+import daisyui from 'daisyui';
+import typography from '@tailwindcss/typography';
+import type { Config } from 'tailwindcss';
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+/** @type {Config} */
+const config: Config = {
   content: [
-    join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}'),
-    ...createGlobPatternsForDependencies(__dirname),
+    // Scan all Angular apps and libraries
+    join(process.cwd(), 'apps/**/src/**/!(*.stories|*.spec).{ts,html}'),
+    join(process.cwd(), 'libs/**/src/**/!(*.stories|*.spec).{ts,html}'),
+    ...createGlobPatternsForDependencies(process.cwd()),
   ],
   theme: {
     fontFamily: {
@@ -23,6 +28,10 @@ module.exports = {
     },
     extend: {},
   },
+  plugins: [
+    typography,
+    daisyui, // DaisyUI plugin
+  ],
   daisyui: {
     themes: [
       {
@@ -39,10 +48,8 @@ module.exports = {
     utils: true,
     prefix: '',
     logs: true,
-    themeRoot: ':root'
+    themeRoot: ':root',
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-    require('daisyui'),
-  ],
 };
+
+export default config;
