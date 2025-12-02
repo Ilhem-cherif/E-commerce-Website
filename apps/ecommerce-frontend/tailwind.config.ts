@@ -36,6 +36,7 @@ const config: Config = {
     themes: [
       {
         fantasy: {
+          'base-100' : '#ffffff',
           primary: '#0000ff',
           'primary-content': 'white',
           secondary: '#F6F6F6',
