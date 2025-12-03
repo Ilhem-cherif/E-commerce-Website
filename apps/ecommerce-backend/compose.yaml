@@ -1,9 +1,11 @@
 services:
-  postgres:
+  database:
     image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
     ports:
-      - '5432'
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_DB=ezshop'
+      - 'POSTGRES_PASSWORD=ezshop'
+      - 'POSTGRES_USER=ezshop'
+    volumes:
+      - './volumes/ezshop/postgres:/var/lib/postgresql/data' # don't lose our change when the container is destroyed
